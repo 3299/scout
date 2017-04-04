@@ -1,0 +1,143 @@
+<head>
+  <title>scout</title>
+</head>
+
+<body>
+  <button class="button button-clear nav-button" data-link="/">Add Team</button>
+  <button class="button button-clear nav-button" data-link="/data">Data</button>
+  <button class="button button-clear nav-button" data-link="/whiteboard">Whiteboard</button>
+</body>
+
+<template name="main">
+  <div class="container">
+    {{#if getNumber}}
+      {{> numberForm}}
+    {{else}}
+      {{> teamForm}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="data">
+  <div class="container">
+    <table id="data">
+      <thead>
+        <th data-sort-direction="1" data-sort="team">Team</th>
+        <th data-sort-direction="1" data-sort="repeat">Climb Repeatability</th>
+        <th data-sort-direction="1" data-sort="time">Climb Time</th>
+        <th data-sort-direction="1" data-sort="mechanism">Gear Mechanism</th>
+        <th data-sort-direction="1" data-sort="cycleTime">Cycle Time</th>
+        <th data-sort-direction="1" data-sort="ballGoal">Ball Goal</th>
+        <th data-sort-direction="1" data-sort="accuracy">Ball Accuracy</th>
+        <th data-sort-direction="1" data-sort="speed">Ball Speed</th>
+        <th data-sort-direction="1" data-sort="notes">Notes</th>
+        <th>Edit</th>
+      </thead>
+      <tbody>
+        {{#each rows}}
+          <tr>
+            <td>{{team}}</td>
+            <td>{{repeat}}</td>
+            <td>{{time}}</td>
+            <td>{{mechanism}}</td>
+            <td>{{cycleTime}}</td>
+            <td>{{ballGoal}}</td>
+            <td>{{accuracy}}</td>
+            <td>{{speed}}</td>
+            <td>{{notes}}</td>
+            <td><button class="button button-outline">Edit</button></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template name="whiteboard">
+  <div class="container">
+    <canvas id="whiteboard"></canvas>
+  </div>
+</template>
+
+<template name="numberForm">
+  <form id="numberForm">
+      <div class="row">
+      <div class="column float-right">
+        <input type="number" placeholder="Team #" />
+      </div>
+      <div class="column float-left">
+        <input type="submit" value="Go" />
+      </div>
+    </div>
+  </form>
+</template>
+
+<template name="teamForm">
+  <form id="teamForm">
+    <h2>Abilities</h2>
+    <label for="climb-Check">Climb</label><input type="checkbox" id="climb-Check" class="ability-Check" data-show="climb"/>
+    <label for="gears-Check">Gears</label><input type="checkbox" id="gears-Check" class="ability-Check" data-show="gears"/>
+    <label for="balls-Check">Balls</label><input type="checkbox" id="balls-Check" class="ability-Check" data-show="balls"/>
+    Auto
+    <div class="ability hide" id="climb-details">
+      <h2>Climb</h2>
+      <label for="repeat-Climb">Repeatability</label>
+      <div class="button-group" id="repeat-Climb">
+        <input type="button" value="0%"/>
+        <input type="button" value="50%"/>
+        <input type="button" value="100%"/>
+      </div>
+
+      <label for="time-Climb">Time</label>
+      <div class="button-group" id="time-Climb">
+        <input type="button" value="5s"/>
+        <input type="button" value="10s"/>
+        <input type="button" value="20s"/>
+      </div>
+    </div>
+    <div class="ability hide" id="gears-details">
+      <h2>Gears</h2>
+
+      <label for="mech-Gears">Mechanism</label>
+      <div class="button-group" id="mech-Gears">
+        <input type="button" value="Passive"/>
+        <input type="button" value="Active"/>
+      </div>
+
+      <label for="cycle-Gears">Cycle time</label>
+      <div class="button-group" id="cycle-Gears">
+        <input type="button" value="10s"/>
+        <input type="button" value="20s"/>
+        <input type="button" value="30s"/>
+      </div>
+    </div>
+    <div class="ability hide" id="balls-details">
+      <h2>Balls</h2>
+
+      <label for="goal-Balls">Goal</label>
+      <div class="button-group" id="goal-Balls">
+        <input type="button" value="Low"/>
+        <input type="button" value="High"/>
+      </div>
+
+      <label for="accuracy-Balls">Accuracy</label>
+      <div class="button-group" id="accuracy-Balls">
+        <input type="button" value="0%"/>
+        <input type="button" value="50%"/>
+        <input type="button" value="100%"/>
+      </div>
+
+      <label for="speed-Balls">Speed</label>
+      <div class="button-group" id="speed-Balls">
+        <input type="button" value="Slow"/>
+        <input type="button" value="Moderate"/>
+        <input type="button" value="Fast"/>
+        <input type="button" value="Very Fast"/>
+      </div>
+    </div>
+
+    <textarea placeholder="Notes" id="notes"></textarea>
+
+    <input type="submit" value="Finish" />
+  </form>
+</template>
