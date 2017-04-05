@@ -1,1 +1,1 @@
-# scout
+![screenshot](public/screenshot.png)
