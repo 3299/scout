@@ -1,0 +1,117 @@
+/*-- TEAM NUMBER --*/
+#numberForm {
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+#numberForm #team-number {
+  font-size: 250%;
+  text-align: center;
+  height: auto;
+}
+
+#numberForm input[type=submit] {
+  font-size: 250%;
+  width: 100%;
+  padding: 0;
+  height: auto;
+  padding: 1rem 0 1rem 0;
+}
+
+/*-- TEAM FORM --*/
+#teamForm h2 {
+  margin-bottom: 0;
+  color: black;
+}
+
+#teamForm #team-number {
+  color: black;
+}
+
+#teamForm hr {
+  margin-top: 1rem;
+  padding-top: 0;
+}
+
+#teamForm .ability h2, #notes { /* spacing between items */
+  margin-top: 4rem;
+}
+
+#teamForm .ability-Button {
+  width: 100%;
+}
+
+.ability-Button.active {
+  background-color: #9b4dca !important;
+  color: white !important;
+}
+
+#teamForm input[type=submit] {
+  width: 100%;
+}
+
+#teamForm .ability > label {
+  margin-bottom: 1rem;
+  margin-top: 2rem
+}
+
+/*-- DATA --*/
+#data th {
+  text-align: center;
+  font-size: 80%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+}
+
+th.st-head-row:not(.st-head-row-main) {
+  background: #0101;
+  padding-left: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+}
+
+/*-- WHITEBOARD --*/
+#whiteboard-container {
+  text-align: center;
+}
+
+#whiteboard {
+  background-image: url('/field.png');
+}
+
+/*-- BUTTON GROUPS --*/
+.button-group {
+  display: flex;
+}
+
+.button-group input[type=button] {
+  margin: 0;
+  border: 0.1rem solid #9b4dca;
+  color: #606c76;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.button-group input[type=button].active {
+  background-color: #9b4dca;
+  border: none;
+  color: white;
+}
+
+.button-group input[type=button]:first-child {
+  border-radius: 5px 0 0 5px;
+  border-right: none;
+}
+
+.button-group input[type=button]:last-child {
+  border-radius: 0 5px 5px 0;
+  border-left: none;
+}
+
+.button-group input[type=button]:not(:last-child):not(:first-child) {
+  border-right: 1px solid #9b4dca;
+  border-radius: 0;
+}

@@ -1,0 +1,66 @@
+/*-- GLOBAL --*/
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.container {
+  height: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+.button, input[type=submit], input[type=button] { /* fix for weird looking button on iOS */
+  -webkit-appearance: none;
+}
+
+.button.danger {
+  color: red;
+  border-color: red;
+  padding: 0 1.0rem;
+}
+
+#nav {
+  padding-top: 2rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+#nav button {
+  font-size: 140%;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 2rem;
+  height: 10%;
+}
+
+hr {
+  width: 50%;
+  border-top-width: 0.5rem;
+}
+
+/*-- black button --*/
+.button-black,
+input[type='button'].button-black {
+  background-color: black;
+  border-color: black;
+}
+
+.button-black.button-clear,
+.button-black.button-outline,
+input[type='button'].button-outline {
+  background-color: transparent;
+  color: black;
+}
+
+.button-black.button-clear.active,
+.button-black.button-outline.active,
+input[type='button'].button-outline.active {
+  background-color: black;
+  color: white;
+}

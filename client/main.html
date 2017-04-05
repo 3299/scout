@@ -1,143 +1,300 @@
 <head>
   <title>scout</title>
 </head>
-
 <body>
-  <button class="button button-clear nav-button" data-link="/">Add Team</button>
-  <button class="button button-clear nav-button" data-link="/data">Data</button>
-  <button class="button button-clear nav-button" data-link="/whiteboard">Whiteboard</button>
 </body>
 
-<template name="main">
+<!-- /data -->
+<template name="data">
   <div class="container">
-    {{#if getNumber}}
-      {{> numberForm}}
+    {{> nav}}
+
+    {{#if isData}}
+      <div class="row">
+        <button class="button button-outline button-black button-sort">Sort</button>
+        <button class="button button-outline button-black {{#if showAuto}}active{{/if}}" data-show="showAuto">Auto</button>
+        <button class="button button-outline button-black {{#if showClimb}}active{{/if}}" data-show="showClimb">Climb</button>
+        <button class="button button-outline button-black {{#if showGears}}active{{/if}}" data-show="showGears">Gears</button>
+        <button class="button button-outline button-black {{#if showBalls}}active{{/if}}" data-show="showBalls">Balls</button>
+      </div>
+      <div class="row data-container">
+        <div class="column">
+          <table id="data" class="stacktable">
+            <tbody>
+              <tr>
+                <th data-sort-direction="1" data-sort="team">Team</th>
+                <th data-sort-direction="1" data-sort="auto">Autonomous</th>
+                <th data-sort-direction="1" data-sort="climb.repeat">Climb Repeatability</th>
+                <th data-sort-direction="1" data-sort="climb.time">Climb Time</th>
+                <th data-sort-direction="1" data-sort="gears.mechanism">Gear Mechanism</th>
+                <th data-sort-direction="1" data-sort="gears.cycleTime">Cycle Time</th>
+                <th data-sort-direction="1" data-sort="balls.goal">Ball Goal</th>
+                <th data-sort-direction="1" data-sort="balls.accuracy">Ball Accuracy</th>
+                <th data-sort-direction="1" data-sort="balls.speed">Ball Speed</th>
+                <th data-sort-direction="1" data-sort="notes">Notes</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+
+              {{#each rows}}
+                <tr>
+                  <td>{{team}}</td>
+                  {{#if auto}}
+                    <td><button class="button button-outline auto">Auto</button></td>
+                  {{else}}
+                    <td>No auto</td>
+                  {{/if}}
+                  <td>{{#if climb.repeat}}{{climb.repeat}}%{{/if}}</td>
+                  <td>{{#if climb.time}}{{climb.time}}s{{/if}}</td>
+                  <td>{{gears.mechanism}}</td>
+                  <td>{{#if gears.cycleTime}}{{gears.cycleTime}}s{{/if}}</td>
+                  <td>{{balls.goal}}</td>
+                  <td>{{#if balls.accuracy}}{{balls.accuracy}}%{{/if}}</td>
+                  <td>{{balls.speed}}</td>
+                  <td>{{notes}}</td>
+                  <td><a href="/team/{{team}}" class="button button-outline">Edit</a></td>
+                  <td><button class="button button-outline danger delete-button">Delete</button></td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row sort-container hide">
+        <div class="column column-offset-25">
+          <div class="ability" id="auto-details">
+            <h2>Autonomous</h2>
+            <hr/>
+
+            <label for="gear-Auto">Gears</label>
+            <div class="button-group" id="gear-Auto">
+              <input type="button" value="Left" data-value="0" />
+              <input type="button" value="Front" data-value="1"/>
+              <input type="button" value="Right" data-value="2"/>
+            </div>
+
+            <label for="ball-auto">Balls</label>
+            <div class="button-group" id="balls-Auto">
+              <input type="button" value="5kpa"  data-value="5"/>
+              <input type="button" value="20kpa" data-value="20"/>
+              <input type="button" value="40kpa" data-value="40"/>
+            </div>
+
+            <label for="repeat-Climb">Repeatability</label>
+            <div class="button-group" id="repeat-Auto">
+              <input type="button" value="0%"   data-value="0"/>
+              <input type="button" value="50%"  data-value="50"/>
+              <input type="button" value="100%" data-value="100"/>
+            </div>
+          </div>
+          <div class="ability" id="climb-details">
+            <h2>Climb</h2>
+            <hr/>
+
+            <label for="repeat-Climb">Repeatability</label>
+            <div class="button-group" id="repeat-Climb">
+              <input type="button" value="0%"   data-value="0"/>
+              <input type="button" value="50%"  data-value="50"/>
+              <input type="button" value="100%" data-value="100"/>
+            </div>
+
+            <label for="time-Climb">Time</label>
+            <div class="button-group" id="time-Climb">
+              <input type="button" value="5s"  data-value="5"/>
+              <input type="button" value="10s" data-value="10"/>
+              <input type="button" value="20s" data-value="20"/>
+            </div>
+          </div>
+          <div class="ability" id="gears-details">
+            <h2>Gears</h2>
+            <hr/>
+
+            <label for="mechanism-Gears">Mechanism</label>
+            <div class="button-group" id="mechanism-Gears">
+              <input type="button" value="Passive" data-value="passive"/>
+              <input type="button" value="Active"  data-value="active"/>
+            </div>
+
+            <label for="cycleTime-Gears">Cycle time</label>
+            <div class="button-group" id="cycleTime-Gears">
+              <input type="button" value="10s" data-value="10"/>
+              <input type="button" value="20s" data-value="20"/>
+              <input type="button" value="30s" data-value="30"/>
+            </div>
+          </div>
+          <div class="ability" id="balls-details">
+            <h2>Balls</h2>
+            <hr/>
+
+            <label for="goal-Balls">Goal</label>
+            <div class="button-group" id="goal-Balls">
+              <input type="button" value="Low"  data-value="low"/>
+              <input type="button" value="High" data-value="high"/>
+            </div>
+
+            <label for="accuracy-Balls">Accuracy</label>
+            <div class="button-group" id="accuracy-Balls">
+              <input type="button" value="0%"   data-value="0"/>
+              <input type="button" value="50%"  data-value="50"/>
+              <input type="button" value="100%" data-value="100"/>
+            </div>
+
+            <label for="speed-Balls">Speed</label>
+            <div class="button-group" id="speed-Balls">
+              <input type="button" value="Slow"      data-value="slow"/>
+              <input type="button" value="Moderate"  data-value="moderate"/>
+              <input type="button" value="Fast"      data-value="fast"/>
+              <input type="button" value="Very Fast" data-value="very_fast"/>
+            </div>
+          </div>
+        </div>
+      </div>
     {{else}}
-      {{> teamForm}}
+      <div class="center">
+        <h3>No information in database.</h3>
+      </div>
     {{/if}}
   </div>
 </template>
 
-<template name="data">
-  <div class="container">
-    <table id="data">
-      <thead>
-        <th data-sort-direction="1" data-sort="team">Team</th>
-        <th data-sort-direction="1" data-sort="repeat">Climb Repeatability</th>
-        <th data-sort-direction="1" data-sort="time">Climb Time</th>
-        <th data-sort-direction="1" data-sort="mechanism">Gear Mechanism</th>
-        <th data-sort-direction="1" data-sort="cycleTime">Cycle Time</th>
-        <th data-sort-direction="1" data-sort="ballGoal">Ball Goal</th>
-        <th data-sort-direction="1" data-sort="accuracy">Ball Accuracy</th>
-        <th data-sort-direction="1" data-sort="speed">Ball Speed</th>
-        <th data-sort-direction="1" data-sort="notes">Notes</th>
-        <th>Edit</th>
-      </thead>
-      <tbody>
-        {{#each rows}}
-          <tr>
-            <td>{{team}}</td>
-            <td>{{repeat}}</td>
-            <td>{{time}}</td>
-            <td>{{mechanism}}</td>
-            <td>{{cycleTime}}</td>
-            <td>{{ballGoal}}</td>
-            <td>{{accuracy}}</td>
-            <td>{{speed}}</td>
-            <td>{{notes}}</td>
-            <td><button class="button button-outline">Edit</button></td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-</template>
-
+<!-- /whiteboard -->
 <template name="whiteboard">
-  <div class="container">
-    <canvas id="whiteboard"></canvas>
+  <div class="container" id="whiteboard-container">
+    {{> nav}}
+    <div class="column">
+      <canvas id="whiteboard" width="824px" height="444px"></canvas>
+    </div>
   </div>
 </template>
 
+<!-- / -->
 <template name="numberForm">
-  <form id="numberForm">
-      <div class="row">
-      <div class="column float-right">
-        <input type="number" placeholder="Team #" />
+  <div class="container">
+    {{> nav}}
+    <form id="numberForm" class="row">
+      <div class="column column-40">
+        <div class="row"><input type="number" required placeholder="Team #" id="team-number" /></div>
+        <div class="row"><input type="submit" value="Go" /></div>
       </div>
-      <div class="column float-left">
-        <input type="submit" value="Go" />
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
 
+<!-- /team/x -->
 <template name="teamForm">
-  <form id="teamForm">
-    <h2>Abilities</h2>
-    <label for="climb-Check">Climb</label><input type="checkbox" id="climb-Check" class="ability-Check" data-show="climb"/>
-    <label for="gears-Check">Gears</label><input type="checkbox" id="gears-Check" class="ability-Check" data-show="gears"/>
-    <label for="balls-Check">Balls</label><input type="checkbox" id="balls-Check" class="ability-Check" data-show="balls"/>
-    Auto
-    <div class="ability hide" id="climb-details">
-      <h2>Climb</h2>
-      <label for="repeat-Climb">Repeatability</label>
-      <div class="button-group" id="repeat-Climb">
-        <input type="button" value="0%"/>
-        <input type="button" value="50%"/>
-        <input type="button" value="100%"/>
+  <div class="container">
+    {{> nav}}
+    <form id="teamForm">
+      <div class="row">
+        <div class="column sticky">
+          <h2 id="team-number">{{team}}</h2>
+          <hr/>
+
+          <div class="row"><div class="column column-40"><input type="button" value="Autonomous" data-show="auto" class="button button-outline ability-Button"/></div></div>
+          <div class="row"><div class="column column-40"><input type="button" value="Climb" data-show="climb" class="button button-outline ability-Button"/></div></div>
+          <div class="row"><div class="column column-40"><input type="button" value="Gears" data-show="gears" class="button button-outline ability-Button"/></div></div>
+          <div class="row"><div class="column column-40"><input type="button" value="Balls" data-show="balls" class="button button-outline ability-Button"/></div></div>
+        </div>
+        <div class="column">
+          <div class="ability hide" id="auto-details">
+            <h2>Autonomous</h2>
+            <hr/>
+
+            <label for="gear-Auto">Gears</label>
+            <div class="button-group" id="gear-Auto">
+              <input type="button" value="Left" data-value="0" />
+              <input type="button" value="Front" data-value="1"/>
+              <input type="button" value="Right" data-value="2"/>
+            </div>
+
+            <label for="ball-auto">Balls</label>
+            <div class="button-group" id="balls-Auto">
+              <input type="button" value="5kpa"  data-value="5"/>
+              <input type="button" value="20kpa" data-value="20"/>
+              <input type="button" value="40kpa" data-value="40"/>
+            </div>
+
+            <label for="repeat-Climb">Repeatability</label>
+            <div class="button-group" id="repeat-Auto">
+              <input type="button" value="0%"   data-value="0"/>
+              <input type="button" value="50%"  data-value="50"/>
+              <input type="button" value="100%" data-value="100"/>
+            </div>
+          </div>
+          <div class="ability hide" id="climb-details">
+            <h2>Climb</h2>
+            <hr/>
+
+            <label for="repeat-Climb">Repeatability</label>
+            <div class="button-group" id="repeat-Climb">
+              <input type="button" value="0%"   data-value="0"/>
+              <input type="button" value="50%"  data-value="50"/>
+              <input type="button" value="100%" data-value="100"/>
+            </div>
+
+            <label for="time-Climb">Time</label>
+            <div class="button-group" id="time-Climb">
+              <input type="button" value="5s"  data-value="5"/>
+              <input type="button" value="10s" data-value="10"/>
+              <input type="button" value="20s" data-value="20"/>
+            </div>
+          </div>
+          <div class="ability hide" id="gears-details">
+            <h2>Gears</h2>
+            <hr/>
+
+            <label for="mechanism-Gears">Mechanism</label>
+            <div class="button-group" id="mechanism-Gears">
+              <input type="button" value="Passive" data-value="passive"/>
+              <input type="button" value="Active"  data-value="active"/>
+            </div>
+
+            <label for="cycleTime-Gears">Cycle time</label>
+            <div class="button-group" id="cycleTime-Gears">
+              <input type="button" value="10s" data-value="10"/>
+              <input type="button" value="20s" data-value="20"/>
+              <input type="button" value="30s" data-value="30"/>
+            </div>
+          </div>
+          <div class="ability hide" id="balls-details">
+            <h2>Balls</h2>
+            <hr/>
+
+            <label for="goal-Balls">Goal</label>
+            <div class="button-group" id="goal-Balls">
+              <input type="button" value="Low"  data-value="low"/>
+              <input type="button" value="High" data-value="high"/>
+            </div>
+
+            <label for="accuracy-Balls">Accuracy</label>
+            <div class="button-group" id="accuracy-Balls">
+              <input type="button" value="0%"   data-value="0"/>
+              <input type="button" value="50%"  data-value="50"/>
+              <input type="button" value="100%" data-value="100"/>
+            </div>
+
+            <label for="speed-Balls">Speed</label>
+            <div class="button-group" id="speed-Balls">
+              <input type="button" value="Slow"      data-value="slow"/>
+              <input type="button" value="Moderate"  data-value="moderate"/>
+              <input type="button" value="Fast"      data-value="fast"/>
+              <input type="button" value="Very Fast" data-value="very_fast"/>
+            </div>
+          </div>
+
+          <textarea placeholder="Notes" id="notes"></textarea>
+
+          <input type="submit" value="Finish" />
+        </div>
       </div>
+    </form>
+  </div>
+</template>
 
-      <label for="time-Climb">Time</label>
-      <div class="button-group" id="time-Climb">
-        <input type="button" value="5s"/>
-        <input type="button" value="10s"/>
-        <input type="button" value="20s"/>
-      </div>
-    </div>
-    <div class="ability hide" id="gears-details">
-      <h2>Gears</h2>
-
-      <label for="mech-Gears">Mechanism</label>
-      <div class="button-group" id="mech-Gears">
-        <input type="button" value="Passive"/>
-        <input type="button" value="Active"/>
-      </div>
-
-      <label for="cycle-Gears">Cycle time</label>
-      <div class="button-group" id="cycle-Gears">
-        <input type="button" value="10s"/>
-        <input type="button" value="20s"/>
-        <input type="button" value="30s"/>
-      </div>
-    </div>
-    <div class="ability hide" id="balls-details">
-      <h2>Balls</h2>
-
-      <label for="goal-Balls">Goal</label>
-      <div class="button-group" id="goal-Balls">
-        <input type="button" value="Low"/>
-        <input type="button" value="High"/>
-      </div>
-
-      <label for="accuracy-Balls">Accuracy</label>
-      <div class="button-group" id="accuracy-Balls">
-        <input type="button" value="0%"/>
-        <input type="button" value="50%"/>
-        <input type="button" value="100%"/>
-      </div>
-
-      <label for="speed-Balls">Speed</label>
-      <div class="button-group" id="speed-Balls">
-        <input type="button" value="Slow"/>
-        <input type="button" value="Moderate"/>
-        <input type="button" value="Fast"/>
-        <input type="button" value="Very Fast"/>
-      </div>
-    </div>
-
-    <textarea placeholder="Notes" id="notes"></textarea>
-
-    <input type="submit" value="Finish" />
-  </form>
+<template name="nav">
+  <div class="row" id="nav">
+    <div class="column"><button class="button button-clear nav-button" data-link="/">Add Team</button></div>
+    <div class="column"><button class="button button-clear nav-button" data-link="/data">Data</button></div>
+    <div class="column"><button class="button button-clear nav-button" data-link="/whiteboard">Whiteboard</button></div>
+  </div>
 </template>
