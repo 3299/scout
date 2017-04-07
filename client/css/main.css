@@ -1,6 +1,7 @@
 /*-- TEAM NUMBER --*/
 #numberForm {
   height: 80%;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
 }
@@ -20,6 +21,24 @@
 }
 
 /*-- TEAM FORM --*/
+.abilities-container {
+  background-color: white;
+}
+
+#teamForm {
+  flex-wrap: wrap;
+}
+
+@media screen and (min-width: 40.0rem), (orientation:landscape) {
+  .abilities-container input[type=button] {
+    width: 50% !important;
+  }
+
+  #teamForm {
+    flex-wrap: nowrap;
+  }
+}
+
 #teamForm h2 {
   margin-bottom: 0;
   color: black;
@@ -38,10 +57,6 @@
   margin-top: 4rem;
 }
 
-#teamForm .ability-Button {
-  width: 100%;
-}
-
 .ability-Button.active {
   background-color: #9b4dca !important;
   color: white !important;
@@ -57,6 +72,10 @@
 }
 
 /*-- DATA --*/
+#data tr td {
+  text-align: center;
+}
+
 #data th {
   text-align: center;
   font-size: 80%;
@@ -80,11 +99,14 @@ th.st-head-row:not(.st-head-row-main) {
 
 #whiteboard {
   background-image: url('/field.png');
+  width: 100%;
+  height: 54%;
 }
 
 /*-- BUTTON GROUPS --*/
 .button-group {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .button-group input[type=button] {
